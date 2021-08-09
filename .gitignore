@@ -105,4 +105,4 @@ dist
 
 
 # PG DATABASE FILES
-data/*
+data
