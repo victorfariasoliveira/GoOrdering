@@ -1,4 +1,4 @@
-# Sistema de Pedidos
+# GoOrdering
  Criado com NestJS. Esse projeto tem 4 aplicações. <br/>Sendo ordering-system o api-gateway do projeto e customer, order e product-orders os microserviços <br/> responsaveis pelo crud da aplicação.
 
 ### Requisitos
