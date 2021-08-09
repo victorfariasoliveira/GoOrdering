@@ -3,10 +3,8 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppService } from './app.service';
 import { CustomerDto, CustomerUpdateDto } from './dtos/customer.dto';
 import { CustomerEntity } from './entities/customer.entity';
-import { ExceptionFilter } from './filters/rpc-exception.filter';
 
 @Controller()
-@UseFilters(new ExceptionFilter())
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
