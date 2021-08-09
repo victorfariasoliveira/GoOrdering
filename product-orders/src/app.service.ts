@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm/dist/common/typeorm.decorators';
 import { Repository } from 'typeorm';
 import { ProductDto, ProductUpdateDto } from './dtos/product.dto';
@@ -11,24 +11,46 @@ export class AppService {
     private productRepository: Repository<ProductEntity>,
   ) { }
 
+  private readonly logger = new Logger(AppService.name)
+
   async findAll(): Promise<ProductEntity[]> {
-    return this.productRepository.find();
+    try {
+      return this.productRepository.find();
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw error
+    }
   }
 
   async create(product: ProductDto): Promise<void> {
-    await this.productRepository.save(product);
+    try {
+      await this.productRepository.save(product);
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw error
+    }
   }
 
   public async update({ id, name, price }: ProductUpdateDto): Promise<void> {
-    const product = await this.productRepository.findOne(id)
+    try {
+      const product = await this.productRepository.findOne(id)
 
-    product.name = name ? name : product.name
-    product.price = price ? price : product.price
+      product.name = name ? name : product.name
+      product.price = price ? price : product.price
 
-    await this.productRepository.save(product)
+      await this.productRepository.save(product)
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw error
+    }
   }
 
   public async delete(id: number): Promise<void> {
-    await this.productRepository.delete(id)
+    try {
+      await this.productRepository.delete(id)
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw error
+    }
   }
 }
