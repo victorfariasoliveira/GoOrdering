@@ -1,0 +1,59 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: "postgres"
+    environment:
+      - POSTGRES_DB=ordering
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - TZ=GMT
+    ports:
+      - 5432:5432
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports: 
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:2.11-1.1.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment: 
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  ordering-system:
+    build: ./ordering-system
+    container_name: ordering-system
+    command: yarn start
+    depends_on:
+      - kafka
+    ports:
+      - '8000:8000'
+  order:
+    build: ./order
+    container_name: order
+    command: yarn start
+    depends_on:
+      - kafka
+      - ordering-system
+      - postgres
+  customer:
+    build: ./customer
+    container_name: customer
+    command: yarn start
+    depends_on:
+      - kafka
+      - ordering-system
+      - postgres
+  product-orders:
+    build: ./product-orders
+    container_name: product-orders
+    command: yarn start
+    depends_on:
+      - kafka
+      - ordering-system
+      - postgres

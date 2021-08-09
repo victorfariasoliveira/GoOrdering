@@ -6,7 +6,7 @@ import { CustomerEntity } from 'src/entities/customer.entity';
     imports: [
         TypeOrmModule.forRoot({
             type: 'postgres',
-            host: 'localhost',
+            host: 'postgres',
             username: 'postgres',
             password: 'docker',
             database: 'ordering',

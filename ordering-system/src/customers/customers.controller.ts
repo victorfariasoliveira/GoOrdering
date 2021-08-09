@@ -12,7 +12,7 @@ export class CustomersController implements OnModuleInit {
         options: {
             client: {
                 clientId: 'customer',
-                brokers: ['localhost:9092'],
+                brokers: ['kafka:9092'],
             },
             consumer: {
                 groupId: 'customer-consumer',
