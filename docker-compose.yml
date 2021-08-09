@@ -28,9 +28,24 @@ services:
     ports:
       - 5432:5432
   ordering-system:
-    build: .
+    build: ./ordering-system
     command: yarn start
     ports:
       - '8000:8000'
     volumes:
       - .:/usr/ordering-system
+  order:
+    build: ./order
+    command: yarn start
+    volumes:
+      - .:/usr/order
+  customer:
+    build: ./customer
+    command: yarn start
+    volumes:
+      - .:/usr/customer
+  product-orders:
+    build: ./product-orders
+    command: yarn start
+    volumes:
+      - .:/usr/product-orders
