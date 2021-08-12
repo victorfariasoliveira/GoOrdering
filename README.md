@@ -7,10 +7,9 @@
 
 ## Iniciar projeto
 
-Via terminal:
+Via terminal, dentro da pasta do projeto:
 
 ```bash
-$ cd ordering-system
 $ docker-compose up -d --no-recreate
 ```
 
